@@ -36,13 +36,13 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        Log.d(TAG, "onStart")
+        Log.d(TAG, "onStart       Giiit TEST")
     }
 
     override fun onResume() {
         super.onResume()
 
-        Log.d(TAG, "onResume")
+        Log.d(TAG, "onResumeeee")
     }
 
     override fun onPause() {

@@ -3,15 +3,16 @@ package kz.kolesateam.confapp.hello.presentation
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.R
 
+const val SHARED_PREFERENCES = "application"
+const val USER_NAME_KEY = "user_name"
 
 class HelloActivity : AppCompatActivity() {
 
@@ -19,10 +20,10 @@ class HelloActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
 
-        val continueButton: Button = findViewById(R.id.continue_button)
-        val mainActivityNameEditText: EditText = findViewById(R.id.activity_main_edit_text)
+        val continueButton: Button = findViewById(R.id.activity_hello_continue_button)
+        val nameEditText: EditText = findViewById(R.id.activity_hello_name_edit_text)
 
-        mainActivityNameEditText.addTextChangedListener(object:TextWatcher {
+        nameEditText.addTextChangedListener(object:TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -35,24 +36,24 @@ class HelloActivity : AppCompatActivity() {
             }
         })
         continueButton.setOnClickListener {
-            saveUserName(mainActivityNameEditText.text.toString())
-            switchToHelloScreen()
+            saveUserName(nameEditText.text.toString())
+            navigateToHelloScreenActivity()
         }
     }
 
     private fun saveUserName(userName: String){
         val sharedPreferences: SharedPreferences = getSharedPreferences(
-                "SHARED_PREFERENCES",
+                SHARED_PREFERENCES,
                 Context.MODE_PRIVATE
         )
         val editor: SharedPreferences.Editor = sharedPreferences.edit()
         editor
-                .putString("User Name", userName)
+                .putString(USER_NAME_KEY, userName)
                 .apply()
     }
 
-    private fun switchToHelloScreen(){
-        val helloScreenIntent = Intent(this, HelloScreenActivity::class.java)
+    private fun navigateToHelloScreenActivity(){
+        val helloScreenIntent = Intent(this, TestHelloActivity::class.java)
         startActivity(helloScreenIntent)
     }
 }

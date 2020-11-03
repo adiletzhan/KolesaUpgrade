@@ -9,76 +9,77 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="165dp"
-        android:background="@color/black">
+        android:layout_height="@dimen/hello_activity_shapka_height"
+        android:background="@color/black"
+        >
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/bg" />
+            android:src="@drawable/bg_activity_hello"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/bg"
+            android:background="@drawable/bg_activity_hello"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:src="@drawable/ic_logo_white" />
+                android:layout_marginTop="@dimen/hello_activity_img1_marginTop"
+                android:src="@drawable/ic_logo_white"
+                />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_corona2_1" />
-
+                android:src="@drawable/ic_corona2_1"
+                />
         </LinearLayout>
     </FrameLayout>
 
-
-
     <TextView
-        android:id="@+id/activity_main_text_view"
+        android:id="@+id/activity_hello_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Hello_activity_name_question"
-        android:textSize="24sp"
+        android:text="@string/hello_activity_name_question"
+        android:textSize="@dimen/hello_activity_textView_textSize"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginHorizontal="@dimen/hello_activity_textView_marginHorizontal"
+        android:layout_marginTop="@dimen/hello_activity_textView_marginTop"
+        android:layout_marginBottom="@dimen/hello_activity_textView_marginBottom"
         />
 
     <EditText
-        android:id="@+id/activity_main_edit_text"
+        android:id="@+id/activity_hello_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="@string/Hello_activity_name_space"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="8dp"
-        android:padding="10dp"
-        android:background="@drawable/bg_edit_text" />
+        android:hint="@string/hello_activity_name_hint"
+        android:layout_marginHorizontal="@dimen/hello_activity_editText_marginHorizontal"
+        android:layout_marginVertical="@dimen/hello_activity_editText_marginVertical"
+        android:padding="@dimen/hello_activity_editText_padding"
+        android:background="@drawable/bg_name_edit_text" />
 
     <Button
-        android:id="@+id/continue_button"
+        android:id="@+id/activity_hello_continue_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/Hello_activity_continue"
+        android:text="@string/hello_activity_continue_button_text"
         android:textAllCaps="false"
-        android:textSize="16sp"
-        android:textColor="@drawable/text_color"
-        android:background="@drawable/bg_button"
-        android:layout_marginVertical="8dp"
-        android:layout_marginHorizontal="16dp"
-        android:padding="10dp"
+        android:textSize="@dimen/hello_activity_continue_button_textSize"
+        android:textColor="@color/continue_button_text_color"
+        android:background="@drawable/bg_continue_button"
+        android:layout_marginVertical="@dimen/hello_activity_continueButton_marginVertical"
+        android:layout_marginHorizontal="@dimen/hello_activity_continueButton_marginHorizontal"
+        android:padding="@dimen/hello_activity_continueButton_padding"
         android:enabled="false"
         />
 

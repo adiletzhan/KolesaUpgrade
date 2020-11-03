@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:drawable="@drawable/bg_submit_button_enabled"
+    <item android:drawable="@drawable/bg_continue_btn_enabled"
         android:state_enabled="true"/>
     <item
-        android:drawable="@drawable/bg_submit_btn_disabled" />
+        android:drawable="@drawable/bg_continue_btn_disabled" />
 
 </selector>

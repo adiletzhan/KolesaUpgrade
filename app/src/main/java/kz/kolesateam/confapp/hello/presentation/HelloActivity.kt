@@ -1,63 +1,59 @@
 package kz.kolesateam.confapp.hello.presentation
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.R
 
-private const val TAG = "HelloActivity"
+const val SHARED_PREFERENCES = "application"
+const val USER_NAME_KEY = "user_name"
 
 class HelloActivity : AppCompatActivity() {
-
-    private val closeHelloButton: Button by lazy {
-        findViewById(R.id.activity_hello_close_hello_button)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
 
-        closeHelloButton.setOnClickListener {
-            finish()
+        val continueButton: Button = findViewById(R.id.activity_hello_continue_button)
+        val nameEditText: EditText = findViewById(R.id.activity_hello_name_edit_text)
+
+        nameEditText.addTextChangedListener(object:TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val isInputEmpty: Boolean = p0.toString().isBlank()
+                continueButton.isEnabled = !isInputEmpty
+            }
+        })
+        continueButton.setOnClickListener {
+            saveUserName(nameEditText.text.toString())
+            navigateToHelloScreenActivity()
         }
-
-        Log.d(TAG, "onCreate")
     }
 
-    override fun onRestart() {
-        super.onRestart()
-
-        Log.d(TAG, "onRestart")
+    private fun saveUserName(userName: String){
+        val sharedPreferences: SharedPreferences = getSharedPreferences(
+                SHARED_PREFERENCES,
+                Context.MODE_PRIVATE
+        )
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor
+                .putString(USER_NAME_KEY, userName)
+                .apply()
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        Log.d(TAG, "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Log.d(TAG, "onResume")
-    }
-
-    override fun onPause() {
-        Log.d(TAG, "onPause")
-
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.d(TAG, "onStop")
-
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Log.d(TAG, "onDestroy")
-
-        super.onDestroy()
+    private fun navigateToHelloScreenActivity(){
+        val helloScreenIntent = Intent(this, TestHelloActivity::class.java)
+        startActivity(helloScreenIntent)
     }
 }

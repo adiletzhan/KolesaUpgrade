@@ -10,6 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fasterxml.jackson.databind.JsonNode
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
+import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.data.models.SpeakerApiData
+import okhttp3.ResponseBody
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,9 +44,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
         bindViews()
 
-
-
-        syncLoadButton.setOnClickListener{
+       syncLoadButton.setOnClickListener{
             Log.d("UpcomingEventsActivity", "Synchronous loading")
             progressBar.visibility = ProgressBar.VISIBLE
             loadApiDataSync()
@@ -60,16 +64,23 @@ class UpcomingEventsActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.activity_upcoming_progressBar)
     }
 
-    private fun loadApiDataSync(){
+   private fun loadApiDataSync(){
         Thread{
             try {
-                val response: Response<JsonNode> = apiClient.getUpcomingEvents().execute()
+                val response: Response<ResponseBody> = apiClient.getUpcomingEventsSync().execute()
                 if (response.isSuccessful) {
-                    val body: JsonNode = response.body()!!
+                    //
+                    val responseBody = response.body()!!
+                    val responseJsonString = responseBody.toString()
+                    val responseJsonArray = JSONArray(responseJsonString)
+
+                    val apiBranchDataList = parseBranchesJsonArray(responseJsonArray)
                     runOnUiThread {
-                        responseTextView.setTextColor(resources.getColor(R.color.upcoming_events_sync_load_textColor))
+                        //
+                        Log.d("ParsingResult", apiBranchDataList.toString())
+                        responseTextView.setTextColor(resources.getColor(R.color.upcoming_events_async_load_textColor))
                         progressBar.visibility = ProgressBar.INVISIBLE
-                        responseTextView.text = body.toString()
+                        responseTextView.text = apiBranchDataList.toString()
                     }
                 }
             } catch (ConnectException: SocketException){
@@ -88,25 +99,91 @@ class UpcomingEventsActivity : AppCompatActivity() {
         }.start()
     }
 
+
     private fun loadApiDataAsync(){
-
-        apiClient.getUpcomingEvents().enqueue(object : Callback<JsonNode> {
-
-            override fun onResponse(call: Call<JsonNode>, response: Response<JsonNode>) {
+        apiClient.getUpcomingEventsAsync().enqueue(object : Callback<List<BranchApiData>> {
+            override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
                 if (response.isSuccessful) {
-                    val body: JsonNode = response.body()!!
+                    val responseBody = response.body()!!
+
+                    val apiBranchDataList = responseBody
+
+                    Log.d("ParsingResult", apiBranchDataList.toString())
+
                     responseTextView.setTextColor(resources.getColor(R.color.upcoming_events_async_load_textColor))
                     progressBar.visibility = ProgressBar.INVISIBLE
-                    responseTextView.text = body.toString()
+                    responseTextView.text = apiBranchDataList.toString()
                 }
             }
 
-            override fun onFailure(call: Call<JsonNode>, t: Throwable) {
+            override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
                 progressBar.visibility = ProgressBar.INVISIBLE
                 responseTextView.setTextColor(resources.getColor(R.color.upcoming_events_error_load_textColor))
                 responseTextView.text = t.localizedMessage
             }
         })
-
     }
+
+
+    //manual parsing
+    private fun parseBranchesJsonArray(
+        responseJsonArray: JSONArray
+    ): List<BranchApiData>{
+        val branchList = mutableListOf<BranchApiData>()
+        for (index in 0 until responseJsonArray.length()){
+            val branchJsonObject= (responseJsonArray[index] as? JSONObject)?: continue
+            val branchApiData = parseBranchJsonObject(branchJsonObject)
+            branchList.add(branchApiData)
+        }
+        return branchList
+    }
+
+    private fun parseBranchJsonObject(
+            branchJsonObject: JSONObject
+    ): BranchApiData {
+        val id = branchJsonObject.getInt("id")
+        val title = branchJsonObject.getString("title")
+        val eventsJsonArray = branchJsonObject.getJSONArray("events")
+
+        val eventsApiList = mutableListOf<EventApiData>()
+        for (index in 0 until eventsJsonArray.length()){
+            val eventJsonObject = (eventsJsonArray[index] as? JSONObject) ?: continue
+
+            val eventApiData = parseEventJsonObject(eventJsonObject)
+
+            eventsApiList.add(eventApiData)
+        }
+        return BranchApiData(
+                id = id,
+                title = title,
+                events = eventsApiList
+        )
+    }
+
+    private fun parseEventJsonObject(
+            eventJsonObject: JSONObject
+    ): EventApiData{
+        val id =    eventJsonObject.getInt("id")
+        val title = eventJsonObject.getString("title")
+
+        val speakerJsonObject: JSONObject? = (eventJsonObject.get("speaker") as? JSONObject)
+        var speakerApiData: SpeakerApiData? = null// = parseSpeakerJsonObject(speakerJsonObject)
+
+        speakerJsonObject?.let {
+            speakerApiData = parseSpeakerJsonObject(it)
+        }
+
+        speakerJsonObject?.let {  }
+        return EventApiData(
+                id = id,
+                title = title,
+                speaker = speakerApiData
+        )
+    }
+
+    private fun parseSpeakerJsonObject(
+            speakerJsonObject: JSONObject
+    ): SpeakerApiData = SpeakerApiData(
+            fullName = speakerJsonObject.getString("fullName")
+    )
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="hello_activity_shapka_height">190dp</dimen>
+    <dimen name="hello_activity_img1_marginTop">39dp</dimen>
+    <dimen name="hello_activity_textView_textSize">18sp</dimen>
+    <dimen name="hello_activity_textView_marginHorizontal">16dp</dimen>
+    <dimen name="hello_activity_textView_marginTop">16dp</dimen>
+    <dimen name="hello_activity_textView_marginBottom">16dp</dimen>
+    <dimen name="hello_activity_editText_marginHorizontal">16dp</dimen>
+    <dimen name="hello_activity_editText_marginVertical">16dp</dimen>
+    <dimen name="hello_activity_editText_padding">16dp</dimen>
+    <dimen name="hello_activity_continue_button_textSize">18sp</dimen>
+    <dimen name="hello_activity_continueButton_marginVertical">16dp</dimen>
+    <dimen name="hello_activity_continueButton_marginHorizontal">16dp</dimen>
+    <dimen name="hello_activity_continueButton_padding">16dp</dimen>
+    <dimen name="continue_btn_corner_rad">3dp</dimen>
+    <dimen name="continue_btn_stroke_width">1dp</dimen>
+</resources>

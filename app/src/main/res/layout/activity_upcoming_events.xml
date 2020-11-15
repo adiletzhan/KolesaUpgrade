@@ -57,7 +57,7 @@
                 android:textSize="@dimen/hello_activity_textView_textSize"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints"
-            ></TextView>
+            />
 
         </LinearLayout>
     </ScrollView>

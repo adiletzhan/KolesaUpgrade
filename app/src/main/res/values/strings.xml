@@ -3,4 +3,7 @@
     <string name="hello_activity_name_question">Как тебя зовут?</string>
     <string name="hello_activity_name_hint">Введите имя?</string>
     <string name="hello_activity_continue_button_text">Продолжить</string>
+    <string name="upcoming_events_activity_sync_load_button_text">Sync loading</string>
+    <string name="upcoming_events_activity_async_load_button_text">Async loading</string>
+    <string name="upcoming_events_activity_textView_text">some json</string>
 </resources>

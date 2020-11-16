@@ -11,5 +11,8 @@
     <color name="cnt_btn_stroke">#331C1819</color>
     <color name="cnt_btn_enabled_solid">#2A81DD</color>
     <color name="cnt_btn_text_color">#1C1819</color>
+    <color name="upcoming_events_sync_load_textColor">#2196F3</color>
+    <color name="upcoming_events_async_load_textColor">#4CAF50</color>
+    <color name="upcoming_events_error_load_textColor">#F44336</color>
 
 </resources>

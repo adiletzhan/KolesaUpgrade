@@ -38,8 +38,6 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
         bindViews()
 
-
-
         syncLoadButton.setOnClickListener{
             Log.d("UpcomingEventsActivity", "Synchronous loading")
             progressBar.visibility = ProgressBar.VISIBLE

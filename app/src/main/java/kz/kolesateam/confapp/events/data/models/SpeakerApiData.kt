@@ -5,6 +5,12 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class SpeakerApiData (
-    @JsonProperty("fullName")
-    val fullName: String?
+        @JsonProperty("id")
+        val id: Int?,
+        @JsonProperty("fullName")
+        val fullName: String?,
+        @JsonProperty("job")
+        val job: String?,
+        @JsonProperty("photoUrl")
+        val photoUrl: String?
 )

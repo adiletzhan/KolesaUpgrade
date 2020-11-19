@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.JsonNode
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
@@ -69,7 +70,6 @@ class UpcomingEventsActivity : AppCompatActivity() {
             try {
                 val response: Response<ResponseBody> = apiClient.getUpcomingEventsSync().execute()
                 if (response.isSuccessful) {
-                    //
                     val responseBody = response.body()!!
                     val responseJsonString = responseBody.string()
                     val responseJsonArray = JSONArray(responseJsonString)
@@ -125,7 +125,6 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
 
-    //manual parsing
     private fun parseBranchesJsonArray(
         responseJsonArray: JSONArray
     ): List<BranchApiData>{
@@ -165,25 +164,36 @@ class UpcomingEventsActivity : AppCompatActivity() {
     ): EventApiData{
         val id =    eventJsonObject.getInt("id")
         val title = eventJsonObject.getString("title")
+        val startTime = eventJsonObject.getString("startTime")
+        val endTime = eventJsonObject.getString("endTime")
+        val description = eventJsonObject.getString("description")
+        val place = eventJsonObject.getString("place")
 
         val speakerJsonObject: JSONObject? = (eventJsonObject.get("speaker") as? JSONObject)
-        var speakerApiData: SpeakerApiData? = null// = parseSpeakerJsonObject(speakerJsonObject)
+        var speakerApiData: SpeakerApiData? = null
 
         speakerJsonObject?.let {
             speakerApiData = parseSpeakerJsonObject(it)
         }
 
-        speakerJsonObject?.let {  }
         return EventApiData(
                 id = id,
                 title = title,
-                speaker = speakerApiData
+                startTime = startTime,
+                endTime = endTime,
+                description = description,
+                place = place,
+                speaker = speakerApiData,
+
         )
     }
 
     private fun parseSpeakerJsonObject(
             speakerJsonObject: JSONObject
     ): SpeakerApiData = SpeakerApiData(
-            fullName = speakerJsonObject.getString("fullName")
+            id = speakerJsonObject.getInt("id"),
+            fullName = speakerJsonObject.getString("fullName"),
+            job = speakerJsonObject.getString("job"),
+            photoUrl = speakerJsonObject.getString("photoUrl")
     )
 }

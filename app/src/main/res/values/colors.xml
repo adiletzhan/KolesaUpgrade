@@ -14,5 +14,6 @@
     <color name="upcoming_events_sync_load_textColor">#2196F3</color>
     <color name="upcoming_events_async_load_textColor">#4CAF50</color>
     <color name="upcoming_events_error_load_textColor">#F44336</color>
+    <color name="app_primary_color">#2A81DD</color>
 
 </resources>

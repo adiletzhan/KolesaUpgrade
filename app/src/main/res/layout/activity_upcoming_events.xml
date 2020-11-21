@@ -1,65 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".events.presentation.UpcomingEventsActivity"
-    android:orientation="vertical"
-    >
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/activity_upcoming_events_sync_load_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/upcoming_events_activity_sync_load_button_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/hello_activity_continue_button_textSize"
-                    tools:ignore="MissingConstraints" />
-
-                <Button
-                    android:id="@+id/activity_upcoming_events_async_load_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/upcoming_events_activity_async_load_button_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/hello_activity_continue_button_textSize"
-                    tools:ignore="MissingConstraints"
-                 />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/activity_upcoming_events_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/upcoming_events_activity_textView_text"
-                android:textColor="@color/black"
-                android:textSize="@dimen/hello_activity_textView_textSize"
-                android:textStyle="bold"
-                tools:ignore="MissingConstraints"
-            />
-        </LinearLayout>
-    </ScrollView>
-    <ProgressBar
-        android:id="@+id/activity_upcoming_progressBar"
-        android:visibility="invisible"
+    android:orientation="vertical">
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-</LinearLayout>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        tools:listitem="@layout/branch_item"
+        tools:itemCount="4"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp"
+        android:drawablePadding="4dp"
+        android:layout_gravity="center|bottom"
+        android:drawableLeft="@drawable/ic_baseline_favorite_border"
+        android:background="@drawable/bg_to_favorite_button"
+        android:text="V izbrannoe"
+        android:textColor="#EAEEF1"
+        android:textAllCaps="false"
+        ></Button>
+</FrameLayout>

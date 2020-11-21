@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@drawable/bg_events_card"
+    android:layout_marginLeft="8dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <TextView
+        android:id="@+id/event_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_event_state"
+        android:text="Event_State"
+        tools:ignore="MissingConstraints"
+        />
+    <TextView
+        android:id="@+id/event_time_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_state"
+        android:textSize="16dp"
+        android:textColor="#888B94"
+        android:text="13:00 - 14:00 "
+        tools:ignore="MissingConstraints"
+        />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/bg_to_favorite_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/speaker_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/event_time_place"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Name of Speaker"
+        android:textColor="@color/black"
+        android:outlineAmbientShadowColor="8dp"
+        />
+    <TextView
+        android:id="@+id/speaker_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speaker_name"
+        android:textSize="16dp"
+        android:textColor="#888B94"
+        android:text="Position"
+        />
+    <TextView
+        android:id="@+id/speaker_speech_topic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speaker_job"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:text="Topic of the speech"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

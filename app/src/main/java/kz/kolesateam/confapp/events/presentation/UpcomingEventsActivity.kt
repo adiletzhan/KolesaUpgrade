@@ -11,6 +11,7 @@ import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.data.models.SpeakerApiData
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -101,6 +102,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
         apiClient.getUpcomingEventsAsync().enqueue(object : Callback<List<BranchApiData>> {
             override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
                 if (response.isSuccessful) {
+                    val upcomingEventsListItemList: MutableList<UpcomingEventsListItem> = mutableListOf()
                     val responseBody = response.body()!!
 
                     val apiBranchDataList = responseBody

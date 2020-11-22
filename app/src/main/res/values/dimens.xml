@@ -15,4 +15,5 @@
     <dimen name="hello_activity_continueButton_padding">16dp</dimen>
     <dimen name="continue_btn_corner_rad">3dp</dimen>
     <dimen name="continue_btn_stroke_width">1dp</dimen>
+    <dimen name="to_favorite_btn_corner_radius">45dp</dimen>
 </resources>

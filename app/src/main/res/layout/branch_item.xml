@@ -43,11 +43,11 @@
             android:layout_height="wrap_content"
             >
             <include
-                android:id="@+id/branch_event_1"
+                android:id="@+id/branch_current_event"
                 layout="@layout/events_card_layout"
             />
             <include
-                android:id="@+id/branch_event_2"
+                android:id="@+id/branch_next_event"
                 layout="@layout/events_card_layout"
                 />
         </LinearLayout>

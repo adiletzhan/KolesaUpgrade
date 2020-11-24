@@ -21,7 +21,7 @@
         android:textColor="@color/white"
         android:background="@drawable/bg_event_card_state"
         android:text="Event_State"
-        tools:ignore="MissingConstraints"
+
         />
     <TextView
         android:id="@+id/event_card_time_place"
@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_card_state_text_vew"
+        app:layout_goneMarginTop="22dp"
         android:layout_marginTop="4dp"
         android:textSize="14dp"
         android:textColor="#888B94"
@@ -52,7 +53,6 @@
         app:layout_constraintTop_toBottomOf="@id/event_card_time_place"
         android:text="Name of Speaker"
         android:textColor="@color/black"
-        android:outlineAmbientShadowColor="8dp"
         />
     <TextView
         android:id="@+id/event_card_speaker_job"

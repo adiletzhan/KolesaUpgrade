@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
@@ -61,7 +62,23 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
                 if (response.isSuccessful) {
-                    branchAdapter.setList(response.body()!!)
+                    val upcomingEventListItemList: MutableList<UpcomingEventsListItem> = mutableListOf()
+                    val headerListItem: UpcomingEventsListItem = UpcomingEventsListItem(
+                            type = 1,
+                            data="asdsad"
+                    )
+
+                    val branchListItemList : List<UpcomingEventsListItem> = response.body()!!.map {branchApiData ->
+                        UpcomingEventsListItem(
+                                type = 2,
+                                data = branchApiData
+                        )
+                    }
+
+                    upcomingEventListItemList.add(headerListItem)
+                    upcomingEventListItemList.addAll(branchListItemList)
+
+                    branchAdapter.setList(upcomingEventListItemList)
 
                     progressBar.visibility = ProgressBar.INVISIBLE
                 }

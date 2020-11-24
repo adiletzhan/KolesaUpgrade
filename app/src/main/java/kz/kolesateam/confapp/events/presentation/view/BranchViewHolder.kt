@@ -33,7 +33,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         branchTitle.text = branchApiData.title
 
         val currentEvent: EventApiData = branchApiData.events.first()
-        val nextEvent: EventApiData = branchApiData.events.component1()
+        val nextEvent: EventApiData = branchApiData.events.component2()
 
         val currentEventTimePlaceText = "%s - %s • %s".format(
                 currentEvent.startTime,

@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.events.data.models
 
-data class UpcomingEventsListItem<T>(
+data class UpcomingEventsListItem(
         val type: Int,
-        val data: T)
+        val data: Any
+    )

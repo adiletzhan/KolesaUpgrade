@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/event_card_state_text_vew"
         app:layout_goneMarginTop="22dp"
         android:layout_marginTop="4dp"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:textColor="#888B94"
         android:text="13:00 - 14:00 "
         tools:ignore="MissingConstraints"
@@ -53,6 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/event_card_time_place"
         android:text="Name of Speaker"
         android:textColor="@color/black"
+        android:textStyle="bold"
         />
     <TextView
         android:id="@+id/event_card_speaker_job"
@@ -60,8 +61,10 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_card_speaker_name"
-        android:textSize="16dp"
+        android:textSize="13sp"
         android:textColor="#888B94"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="Position"
         />
     <TextView
@@ -73,6 +76,9 @@
         android:textSize="16dp"
         android:textColor="@color/black"
         android:text="Topic of the speech"
+        android:minLines="3"
+        android:maxLines="3"
+        android:ellipsize="end"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

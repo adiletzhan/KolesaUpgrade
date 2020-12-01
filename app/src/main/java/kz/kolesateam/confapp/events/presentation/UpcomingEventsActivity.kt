@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
@@ -36,6 +38,9 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
     private val branchAdapter: BranchAdapter = BranchAdapter(eventClickListener = this)
 
     private lateinit var progressBar: ProgressBar
+
+
+    private var isPressed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,7 +113,24 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
     }
 
     override fun onFavoriteClickListener(view: View) {
+            view as ImageButton
+                if (isPressed) {
+                view.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        view.context,
+                        R.drawable.ic_baseline_favorite_filled
+                    )
+                )
+            }
+            else {
+                view.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        view.context,
+                        R.drawable.ic_like_big
+                    )
+                )
+            }
+            isPressed = !isPressed
 
-    }
-
+        }
 }

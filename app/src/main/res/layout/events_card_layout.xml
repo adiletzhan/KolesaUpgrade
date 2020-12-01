@@ -38,6 +38,7 @@
         />
 
     <ImageView
+        android:id="@+id/event_card_favorite_icon"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:src="@drawable/ic_like_big"

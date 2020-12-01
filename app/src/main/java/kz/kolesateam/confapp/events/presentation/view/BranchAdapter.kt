@@ -1,7 +1,5 @@
 package kz.kolesateam.confapp.events.presentation.view
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +8,14 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 
-class BranchAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BranchAdapter(private val eventClickListener: EventClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val dataList: MutableList<UpcomingEventsListItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
             1 ->  HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_layout, parent,false))
-            else ->  BranchViewHolder(View.inflate(parent.context, R.layout.branch_item, null))
+            else ->  BranchViewHolder(View.inflate(parent.context, R.layout.branch_item, null), eventClickListener = eventClickListener)
         }
     }
 

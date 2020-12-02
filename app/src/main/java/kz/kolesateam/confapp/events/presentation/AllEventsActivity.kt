@@ -25,16 +25,17 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
-
-    val apiRetrofit: Retrofit = Retrofit.Builder()
-        .baseUrl("http://37.143.8.68:2020")
-        .addConverterFactory(JacksonConverterFactory.create())
-        .build()
+/*
+val apiRetrofit: Retrofit = Retrofit.Builder()
+    .baseUrl("http://37.143.8.68:2020")
+    .addConverterFactory(JacksonConverterFactory.create())
+    .build()
 
 val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
+*/
 
 @Suppress("DEPRECATION")
-class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
+class AllEventsActivity: AppCompatActivity(), EventClickListener {
     private lateinit var recyclerView: RecyclerView
     private val branchAdapter: BranchAdapter = BranchAdapter(eventClickListener = this)
 
@@ -111,29 +112,29 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
     }
 
     override fun onEventClickListener(view: View, eventTitle: String) {
-            Toast.makeText(this, eventTitle, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, eventTitle, Toast.LENGTH_SHORT).show()
     }
 
     override fun onFavoriteClickListener(view: View) {
-            view as ImageButton
-                if (isPressed) {
-                view.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        view.context,
-                        R.drawable.ic_baseline_favorite_filled
-                    )
+        view as ImageButton
+        if (isPressed) {
+            view.setImageDrawable(
+                ContextCompat.getDrawable(
+                    view.context,
+                    R.drawable.ic_baseline_favorite_filled
                 )
-            }
-            else {
-                view.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        view.context,
-                        R.drawable.ic_like_big
-                    )
-                )
-            }
-            isPressed = !isPressed
+            )
         }
+        else {
+            view.setImageDrawable(
+                ContextCompat.getDrawable(
+                    view.context,
+                    R.drawable.ic_like_big
+                )
+            )
+        }
+        isPressed = !isPressed
+    }
 
     private fun navigateToAllEventsActivity(){
         val allEventsIntent = Intent(this, AllEventsActivity::class.java)

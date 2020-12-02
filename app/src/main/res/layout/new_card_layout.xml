@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/event_card_state_text_vew"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="13sp"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_event_card_state"
+        android:text="Event_State"
+
+        />
+    <TextView
+        android:id="@+id/event_card_time_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_card_state_text_vew"
+        app:layout_goneMarginTop="22dp"
+        android:layout_marginTop="4dp"
+        android:textSize="14sp"
+        android:textColor="#888B94"
+        android:text="13:00 - 14:00 "
+        tools:ignore="MissingConstraints"
+        />
+
+    <ImageView
+        android:id="@+id/event_card_favorite_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/ic_like_big"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/event_card_time_place"
+        app:layout_constraintBottom_toBottomOf="@id/event_card_time_place"
+        />
+    <TextView
+        android:id="@+id/event_card_speaker_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_card_time_place"
+        android:text="Name of Speaker"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/event_card_speaker_job"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_card_speaker_name"
+        android:textSize="13sp"
+        android:textColor="#888B94"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="Position"
+        />
+    <TextView
+        android:id="@+id/event_card_speaker_speech_topic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_card_speaker_job"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:text="Topic of the speech"
+        android:minLines="3"
+        android:maxLines="3"
+        android:ellipsize="end"
+        />
+</androidx.cardview.widget.CardView>

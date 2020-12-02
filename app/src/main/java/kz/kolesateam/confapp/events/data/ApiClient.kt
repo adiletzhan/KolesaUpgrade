@@ -1,12 +1,11 @@
 package kz.kolesateam.confapp.events.data
 
-import com.fasterxml.jackson.databind.JsonNode
+
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import okhttp3.ResponseBody
+import kz.kolesateam.confapp.events.data.models.EventApiData
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 private const val BASE_URL = "http://37.143.8.68:2020/"
 
@@ -14,6 +13,10 @@ interface ApiClient {
     @GET("/upcoming_events")
     fun getUpcomingEvents(): Call<List<BranchApiData>>
 
+    @GET("/branch_events/{branch_id}")
+    fun getAllEventsByBranchId(@Path("branch_id") branchId: Int): Call<List<EventApiData>>
+
+    /*
     companion object RetrofitClient {
         fun create(): ApiClient {
             val retrofit = Retrofit.Builder()
@@ -24,5 +27,5 @@ interface ApiClient {
             return retrofit.create(ApiClient::class.java);
         }
     }
-
+    */
 }

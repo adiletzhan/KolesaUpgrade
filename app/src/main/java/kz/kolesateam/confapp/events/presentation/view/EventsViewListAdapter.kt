@@ -21,6 +21,7 @@ class EventsViewListAdapter(
     }
 
     override fun getItemCount(): Int {
+        return 0
     }
 
 }

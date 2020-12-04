@@ -15,6 +15,8 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.di.ALL_EVENTS_VIEW_MODEL
 import kz.kolesateam.confapp.events.data.models.ProgressState
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.events.presentation.BRANCH_ID
+import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,7 +32,6 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
 
     private lateinit var allEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
-    private lateinit var buttonGoBack: ImageButton
     private lateinit var buttonToFavorites: Button
 
     private val adapter = BranchAdapter(this)
@@ -49,10 +50,8 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
         branchTitle = intent.getStringExtra(BRANCH_TITLE) ?: ""
 
         allEventsProgressBar = findViewById(R.id.activity_allEvents_progressBar)
-        //buttonGoBack = findViewById(R.id.activity_all_events_button_go_back)
-        buttonToFavorites = findViewById(R.id.button_to_favorites)
 
-        recyclerView = findViewById(R.id.activity_all_events_recycler_view)
+        recyclerView = findViewById(R.id.activity_allEvents_recycler_view)
         recyclerView.apply {
             this.adapter = this@AllEventsActivity.adapter
             this.layoutManager = LinearLayoutManager(this@AllEventsActivity)
@@ -62,11 +61,6 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
     }
 
     private fun setOnClickListeners() {
-        buttonGoBack.setOnClickListener {
-            intent = UpcomingEventsRouter().createIntent(this)
-            finish()
-        }
-
         buttonToFavorites.setOnClickListener{
             Toast.makeText(this, "Нажата кнопка ${"В избранные"}", Toast.LENGTH_SHORT).show()
         }
@@ -92,12 +86,15 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
         adapter.setList(upcomingEventsList)
     }
 
-    override fun onEventClickLis(view: View, eventTitle: String) {
+    override fun onEventClickListener(view: View, eventTitle: String) {
         Toast.makeText(this, eventTitle, Toast.LENGTH_SHORT).show()
     }
 
+    override fun onFavoriteClickListener(view: View) {
+        TODO("Not yet implemented")
+    }
+
     override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
-        Toast.makeText(this, branchTitle, Toast.LENGTH_SHORT).show()
     }
 
 }

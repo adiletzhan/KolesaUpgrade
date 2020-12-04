@@ -26,6 +26,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
+const val BRANCH_ID = "branch_id"
+const val BRANCH_TITLE = "branch_title"
 
 val apiRetrofit: Retrofit = Retrofit.Builder()
     .baseUrl("http://37.143.8.68:2020")
@@ -106,9 +108,12 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
         return sharedPreferences.getString(USER_NAME_KEY, "Someone") ?: "Someone"
     }
 
-    override fun onBranchClick(view: View, branchTitle: String) {
-        navigateToAllEventsActivity()
-        // Toast.makeText(this, branchTitle, Toast.LENGTH_SHORT).show()
+    override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
+        val allEventsIntent = Intent(this, AllEventsActivity::class.java)
+        allEventsIntent.putExtra(BRANCH_ID, branchId)
+        allEventsIntent.putExtra(BRANCH_TITLE, branchTitle)
+
+        startActivity(allEventsIntent)
     }
 
     override fun onEventClickListener(view: View, eventTitle: String) {
@@ -136,8 +141,4 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
             isPressed = !isPressed
         }
 
-    private fun navigateToAllEventsActivity(){
-        val allEventsIntent = Intent(this, AllEventsActivity::class.java)
-        startActivity(allEventsIntent)
-    }
 }

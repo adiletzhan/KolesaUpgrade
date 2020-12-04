@@ -5,6 +5,7 @@ import android.view.View
 interface EventClickListener {
     fun onBranchClick(
         view: View,
+        branchId: Int,
         branchTitle: String
     )
 

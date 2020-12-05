@@ -61,6 +61,5 @@ class EventsListViewHolder(
         nextSpeakerName.text = nextEvent.speaker?.fullName ?: "No name"
         nextSpeakerJob.text = nextEvent.speaker?.job ?: "none"
         nextEventTitle.text = nextEvent.title ?: "None"
-
     }
 }

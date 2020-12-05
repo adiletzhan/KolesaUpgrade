@@ -43,7 +43,6 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
     private lateinit var progressBar: ProgressBar
 
-
     private var isPressed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {

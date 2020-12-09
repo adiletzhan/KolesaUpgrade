@@ -49,5 +49,4 @@ class AllEventsViewModel(
             progressLiveData.value = ProgressState.Done
         }
     }
-
 }

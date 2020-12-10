@@ -13,13 +13,17 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.presentation.AllEventsActivity
+import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.ApiClient
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 import kz.kolesateam.confapp.hello.presentation.SHARED_PREFERENCES
 import kz.kolesateam.confapp.hello.presentation.USER_NAME_KEY
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +32,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 
 const val BRANCH_ID = "branch_id"
 const val BRANCH_TITLE = "branch_title"
+const val DEFAULT_USER_NAME = "GUEST"
 
 val apiRetrofit: Retrofit = Retrofit.Builder()
     .baseUrl("http://37.143.8.68:2020")
@@ -39,6 +44,9 @@ val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 @Suppress("DEPRECATION")
 class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
     private lateinit var recyclerView: RecyclerView
+
+    private val userNameDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
+
     private val branchAdapter: BranchAdapter = BranchAdapter(eventClickListener = this)
 
     private lateinit var progressBar: ProgressBar
@@ -100,12 +108,7 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
         )
     }
 
-    private fun getUserName(): String {
-        val sharedPreferences: SharedPreferences = getSharedPreferences(
-            SHARED_PREFERENCES,
-            Context.MODE_PRIVATE)
-        return sharedPreferences.getString(USER_NAME_KEY, "Someone") ?: "Someone"
-    }
+    private fun getUserName(): String = userNameDataSource.getUserName() ?: DEFAULT_USER_NAME
 
     override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
         val allEventsIntent = Intent(this, AllEventsActivity::class.java)

@@ -37,7 +37,7 @@ class AllEventsViewModel(
 
             val allEventsResponse: ResponseData<List<UpcomingEventsListItem>, Exception> =
                 withContext(Dispatchers.IO) {
-                    allEventsRepository.getAllEvents(branchId, branchTitle)
+                    allEventsRepository.getAllEvents(branchId, branchTitle)  ///????? bez implementationa
                 }
 
             when (allEventsResponse) {
@@ -45,7 +45,6 @@ class AllEventsViewModel(
                     allEventsResponse.result
                 is ResponseData.Error -> errorLiveData.value = allEventsResponse.error
             }
-
             progressLiveData.value = ProgressState.Done
         }
     }

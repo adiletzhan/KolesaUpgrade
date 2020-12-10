@@ -9,7 +9,7 @@ import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 
-class EventsListViewHolder(
+class AllEventsViewHolder(
     itemView: View,
     private val eventClickListener: EventClickListener
 ) : RecyclerView.ViewHolder(itemView){

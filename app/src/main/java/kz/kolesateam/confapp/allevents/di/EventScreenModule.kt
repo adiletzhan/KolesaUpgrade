@@ -1,7 +1,8 @@
-package kz.kolesateam.confapp.di
+package kz.kolesateam.confapp.allevents.di
 
 
 import kz.kolesateam.confapp.allevents.data.datasource.AllEventsDataSource
+import kz.kolesateam.confapp.allevents.data.repository.DefaultAllEventsRepository
 import kz.kolesateam.confapp.allevents.presentation.AllEventsViewModel
 
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -29,9 +30,14 @@ val eventScreenModule: Module = module {
         retrofit.create(AllEventsDataSource::class.java)
     }
 
+    factory{
+        DefaultAllEventsRepository(allEventsDataSource = get())
+    }
+
     viewModel(named(ALL_EVENTS_VIEW_MODEL)) {
         AllEventsViewModel(
             allEventsRepository = get()
         )
     }
+
 }

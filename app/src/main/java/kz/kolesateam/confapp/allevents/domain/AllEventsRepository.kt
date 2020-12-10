@@ -4,5 +4,8 @@ import kz.kolesateam.confapp.events.data.models.ResponseData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 
 interface AllEventsRepository {
-    fun getAllEvents(branchId: Int, branchTitle: String) : ResponseData<List<UpcomingEventsListItem>, Exception>
+    fun getAllEvents(
+            branchId: Int,
+            branchTitle: String
+    ) : ResponseData<List<UpcomingEventsListItem>, Exception>
 }

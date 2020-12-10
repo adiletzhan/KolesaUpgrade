@@ -10,12 +10,18 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
 const val SHARED_PREFERENCES = "application"
 const val USER_NAME_KEY = "user_name"
 
 class HelloActivity : AppCompatActivity() {
+
+    private val userNameDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,14 +49,7 @@ class HelloActivity : AppCompatActivity() {
     }
 
     private fun saveUserName(userName: String){
-        val sharedPreferences: SharedPreferences = getSharedPreferences(
-                SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-        )
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor
-                .putString(USER_NAME_KEY, userName)
-                .apply()
+        userNameDataSource.saveUserName(userName)
     }
 
     private fun navigateToUpcomingEventsActivity(){

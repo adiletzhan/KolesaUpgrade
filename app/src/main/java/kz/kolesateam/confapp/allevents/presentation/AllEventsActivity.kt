@@ -3,16 +3,14 @@ package kz.kolesateam.confapp.allevents.presentation
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.observe
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.di.ALL_EVENTS_VIEW_MODEL
+import kz.kolesateam.confapp.allevents.di.ALL_EVENTS_VIEW_MODEL
 import kz.kolesateam.confapp.events.data.models.ProgressState
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.BRANCH_ID
@@ -28,7 +26,7 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
 
 
     private val allEventsViewModel: AllEventsViewModel by viewModel(named(
-        ALL_EVENTS_VIEW_MODEL))
+            ALL_EVENTS_VIEW_MODEL))
 
     private lateinit var allEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -37,6 +35,7 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
     private val adapter = BranchAdapter(this)
     private var branchId: Int = 0
     private var branchTitle: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events)
@@ -49,13 +48,19 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
         branchId = intent.getIntExtra(BRANCH_ID, 0)
         branchTitle = intent.getStringExtra(BRANCH_TITLE) ?: ""
 
-        allEventsProgressBar = findViewById(R.id.activity_allEvents_progressBar)
+        buttonToFavorites = findViewById(R.id.all_events_favorite_button)
 
         recyclerView = findViewById(R.id.activity_allEvents_recycler_view)
+
+        /*
         recyclerView.apply {
             this.adapter = this@AllEventsActivity.adapter
             this.layoutManager = LinearLayoutManager(this@AllEventsActivity)
-        }
+        } */
+
+        recyclerView.adapter = adapter
+
+        allEventsProgressBar = findViewById(R.id.activity_allEvents_progressBar)
 
         setOnClickListeners()
     }

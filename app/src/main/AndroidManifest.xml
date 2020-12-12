@@ -24,7 +24,6 @@
 
         <activity android:name=".allevents.presentation.AllEventsActivity" />
 
-        <activity android:name=".hello.presentation.TestHelloActivity" />
     </application>
 
 </manifest>

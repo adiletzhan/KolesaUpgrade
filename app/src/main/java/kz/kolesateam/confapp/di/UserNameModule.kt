@@ -1,6 +1,6 @@
 package kz.kolesateam.confapp.di
 
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.domain.UserNameDataSource
 import kz.kolesateam.confapp.events.data.datasource.UserNameMemoryDataSource
 import kz.kolesateam.confapp.events.data.datasource.UserNameSharedPrefsDataSource
 import org.koin.core.module.Module

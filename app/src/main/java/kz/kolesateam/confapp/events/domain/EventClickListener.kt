@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.presentation.view
+package kz.kolesateam.confapp.events.domain
 
 import android.view.View
 

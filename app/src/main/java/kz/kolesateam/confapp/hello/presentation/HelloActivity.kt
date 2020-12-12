@@ -1,8 +1,6 @@
 package kz.kolesateam.confapp.hello.presentation
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,13 +9,12 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.domain.UserNameDataSource
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
-const val SHARED_PREFERENCES = "application"
-const val USER_NAME_KEY = "user_name"
+
 
 class HelloActivity : AppCompatActivity() {
 

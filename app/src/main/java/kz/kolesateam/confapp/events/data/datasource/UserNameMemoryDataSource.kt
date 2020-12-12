@@ -1,10 +1,15 @@
 package kz.kolesateam.confapp.events.data.datasource
 
-class UserNameMemoryDataSource : UserNameDataSource {
+import kz.kolesateam.confapp.domain.UserNameDataSource
 
-    private var userName: String? = null
+private const val DEFAULT_USER_NAME = "Guest"
 
-    override fun getUserName(): String? = userName
+class UserNameMemoryDataSource :
+    UserNameDataSource {
+
+    private lateinit var userName: String
+
+    override fun getUserName(): String = userName ?: DEFAULT_USER_NAME
 
     override fun saveUserName(userName: String) {
         this.userName = userName

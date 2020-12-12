@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import org.w3c.dom.Text
+import kz.kolesateam.confapp.events.domain.EventClickListener
 
 class BranchViewHolder(
         itemView: View,
@@ -65,7 +65,7 @@ class BranchViewHolder(
         nextSpeakerName.text = nextEvent.speaker?.fullName ?: "No name"
         nextSpeakerJob.text = nextEvent.speaker?.job ?: "none"
         nextEventTitle.text = nextEvent.title ?: "None"
-
+//review
         branchHeader.setOnClickListener{
             branchApiData.id?.let { it1 ->
                 eventClickListener.onBranchClick(

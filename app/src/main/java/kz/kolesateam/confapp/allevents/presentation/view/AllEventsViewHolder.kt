@@ -7,59 +7,37 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.view.EventClickListener
+import kz.kolesateam.confapp.events.domain.EventClickListener
 
 class AllEventsViewHolder(
     itemView: View,
     private val eventClickListener: EventClickListener
 ) : RecyclerView.ViewHolder(itemView){
-    private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
-    private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
 
-    private val branchTitle: TextView = itemView.findViewById(R.id.branch_item_title)
+    private val eventTimePlace: TextView = itemView.findViewById(R.id.event_card_time_place)
+    private val eventSpeakerName: TextView = itemView.findViewById(R.id.event_card_speaker_name)
+    private val eventSpeakerJob: TextView = itemView.findViewById(R.id.event_card_speaker_job)
+    private val eventTitle: TextView = itemView.findViewById(R.id.event_card_speaker_speech_topic)
 
-    private val currentEventTimePlace: TextView = branchCurrentEvent.findViewById(R.id.event_card_time_place)
-    private val currentSpeakerName: TextView = branchCurrentEvent.findViewById(R.id.event_card_speaker_name)
-    private val currentSpeakerJob: TextView = branchCurrentEvent.findViewById(R.id.event_card_speaker_job)
-    private val currentEventTitle: TextView = branchCurrentEvent.findViewById(R.id.event_card_speaker_speech_topic)
+    private val eventFavoriteIcon: ImageView = itemView.findViewById(R.id.event_card_favorite_icon)
 
-    private val nextEventTimePlace: TextView = branchNextEvent.findViewById(R.id.event_card_time_place)
-    private val nextSpeakerName: TextView = branchNextEvent.findViewById(R.id.event_card_speaker_name)
-    private val nextSpeakerJob: TextView = branchNextEvent.findViewById(R.id.event_card_speaker_job)
-    private val nextEventTitle: TextView = branchNextEvent.findViewById(R.id.event_card_speaker_speech_topic)
-
-
-    init {
-        branchCurrentEvent.findViewById<TextView>(R.id.event_card_state_text_vew).visibility = View.GONE
-    }
-
-    fun onBind(branchApiData: BranchApiData){
-
-        branchTitle.text = branchApiData.title
-
-        val currentEvent: EventApiData = branchApiData.events!!.first()
-        val nextEvent: EventApiData = branchApiData.events.last()
+    fun onBind(
+        eventApiData: EventApiData
+    ){
 
         val currentEventTimePlaceText = "%s - %s • %s".format(
-            currentEvent.startTime,
-            currentEvent.endTime,
-            currentEvent.place
+            eventApiData.startTime,
+            eventApiData.endTime,
+            eventApiData.place
         )
 
-        currentEventTimePlace.text = currentEventTimePlaceText
-        currentSpeakerName.text = currentEvent.speaker?.fullName ?: "No name"
-        currentSpeakerJob.text = currentEvent.speaker?.job ?: "none"
-        currentEventTitle.text = currentEvent.title ?: "None"
+        eventTimePlace.text = currentEventTimePlaceText
+        eventSpeakerName.text = eventApiData.speaker?.fullName ?: "No name"
+        eventSpeakerJob.text = eventApiData.speaker?.job ?: "none"
+        eventTitle.text = eventApiData.title ?: "None"
 
-        val nextEventTimePlaceText = "%s - %s • %s".format(
-            nextEvent.startTime,
-            nextEvent.endTime,
-            nextEvent.place
-        )
-
-        nextEventTimePlace.text = nextEventTimePlaceText
-        nextSpeakerName.text = nextEvent.speaker?.fullName ?: "No name"
-        nextSpeakerJob.text = nextEvent.speaker?.job ?: "none"
-        nextEventTitle.text = nextEvent.title ?: "None"
+        eventFavoriteIcon.setOnClickListener{
+            eventClickListener.onFavoriteClickListener(it)
+        }
     }
 }

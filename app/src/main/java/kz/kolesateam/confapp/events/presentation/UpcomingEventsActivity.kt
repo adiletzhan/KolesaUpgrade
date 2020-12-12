@@ -1,8 +1,6 @@
 package kz.kolesateam.confapp.events.presentation
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
@@ -15,13 +13,11 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.presentation.AllEventsActivity
 import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.ApiClient
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.domain.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.events.domain.EventClickListener
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.events.presentation.view.EventClickListener
-import kz.kolesateam.confapp.hello.presentation.SHARED_PREFERENCES
-import kz.kolesateam.confapp.hello.presentation.USER_NAME_KEY
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import retrofit2.Call
@@ -42,7 +38,8 @@ val apiRetrofit: Retrofit = Retrofit.Builder()
 val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 
 @Suppress("DEPRECATION")
-class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
+class UpcomingEventsActivity : AppCompatActivity(),
+    EventClickListener {
     private lateinit var recyclerView: RecyclerView
 
     private val userNameDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
@@ -96,7 +93,7 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
     private fun getHeaderItem(): UpcomingEventsListItem = UpcomingEventsListItem(
         type = 1,
-        data = "Hello, ${getUserName()}!"
+        data = getUserName() //"Hello, ${getUserName()}!"
     )
 
     private fun getBranchItems(
@@ -108,7 +105,7 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
         )
     }
 
-    private fun getUserName(): String = userNameDataSource.getUserName() ?: DEFAULT_USER_NAME
+    private fun getUserName(): String = userNameDataSource.getUserName()
 
     override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
         val allEventsIntent = Intent(this, AllEventsActivity::class.java)
@@ -142,5 +139,4 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
             }
             isPressed = !isPressed
         }
-
 }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.events.domain.EventClickListener
 
 class BranchAdapter(private val eventClickListener: EventClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -14,7 +15,7 @@ class BranchAdapter(private val eventClickListener: EventClickListener) : Recycl
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
-            1 ->  HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_layout, parent,false))
+            1 ->  HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.upcoming_events_header_layout, parent,false))
             else ->  BranchViewHolder(View.inflate(parent.context, R.layout.branch_item, null), eventClickListener = eventClickListener)
         }
     }

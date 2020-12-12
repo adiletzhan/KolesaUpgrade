@@ -10,21 +10,20 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.allevents.data.datasource.AllEventsListItem
 import kz.kolesateam.confapp.allevents.di.ALL_EVENTS_VIEW_MODEL
-import kz.kolesateam.confapp.events.data.models.ProgressState
-import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.models.ProgressState
+import kz.kolesateam.confapp.allevents.presentation.view.AllEventsAdapter
 import kz.kolesateam.confapp.events.presentation.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
-import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.events.presentation.view.EventClickListener
+import kz.kolesateam.confapp.events.domain.EventClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
 
 @Suppress("DEPRECATION")
-class AllEventsActivity: AppCompatActivity(), EventClickListener {
-
-
+class AllEventsActivity: AppCompatActivity(),
+    EventClickListener {
     private val allEventsViewModel: AllEventsViewModel by viewModel(named(
             ALL_EVENTS_VIEW_MODEL))
 
@@ -32,16 +31,17 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var buttonToFavorites: Button
 
-    private val adapter = BranchAdapter(this)
+    private val adapter = AllEventsAdapter(this)
     private var branchId: Int = 0
-    private var branchTitle: String = ""
+    private var branchTitle: String = "Default Branch Name"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events)
         bindViews()
         observeUpcomingEventsViewModel()
-        allEventsViewModel.onStart(branchId, branchTitle)
+        allEventsViewModel.onStarted(branchId, branchTitle)
+        setOnClickListeners()
     }
 
     private fun bindViews() {
@@ -52,17 +52,14 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
 
         recyclerView = findViewById(R.id.activity_allEvents_recycler_view)
 
+        recyclerView.adapter = adapter
         /*
         recyclerView.apply {
             this.adapter = this@AllEventsActivity.adapter
             this.layoutManager = LinearLayoutManager(this@AllEventsActivity)
         } */
 
-        recyclerView.adapter = adapter
-
         allEventsProgressBar = findViewById(R.id.activity_allEvents_progressBar)
-
-        setOnClickListeners()
     }
 
     private fun setOnClickListeners() {
@@ -73,7 +70,7 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
 
     private fun observeUpcomingEventsViewModel() {
         allEventsViewModel.getProgressLiveData().observe(this, ::handleProgressBarState)
-        allEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
+        allEventsViewModel.getAllEventsLiveData().observe(this,  ::showResult)
         allEventsViewModel.getErrorLiveData().observe(this, ::showError)
     }
 
@@ -87,7 +84,7 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
         Toast.makeText(this, errorMessage.localizedMessage, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showResult(upcomingEventsList: List<UpcomingEventsListItem>) {
+    private fun showResult(upcomingEventsList: List<AllEventsListItem.EventListItem>) {
         adapter.setList(upcomingEventsList)
     }
 
@@ -101,5 +98,4 @@ class AllEventsActivity: AppCompatActivity(), EventClickListener {
 
     override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
     }
-
 }

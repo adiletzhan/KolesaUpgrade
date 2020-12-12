@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="280dp"
-    android:layout_height="wrap_content"
+    android:layout_width="312sp"
+    android:layout_height= "156sp"
     android:background="@drawable/bg_events_card"
     android:layout_marginRight="8dp"
     android:paddingTop="4dp"
@@ -21,7 +21,6 @@
         android:textColor="@color/white"
         android:background="@drawable/bg_event_card_state"
         android:text="Event_State"
-
         />
     <TextView
         android:id="@+id/event_card_time_place"

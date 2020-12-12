@@ -5,28 +5,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
-import kz.kolesateam.confapp.events.presentation.view.BranchViewHolder
-import kz.kolesateam.confapp.events.presentation.view.EventClickListener
-import kz.kolesateam.confapp.events.presentation.view.HeaderViewHolder
+import kz.kolesateam.confapp.allevents.data.datasource.AllEventsListItem
+import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.domain.EventClickListener
+
 
 class  AllEventsAdapter(private val eventClickListener: EventClickListener): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val dataList: MutableList<UpcomingEventsListItem> = mutableListOf()
+    private val dataList: MutableList<AllEventsListItem.EventListItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            1 ->  HeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_layout, parent,false))
-            else -> AllEventsViewHolder(View.inflate(parent.context, R.layout.activity_all_events, null), eventClickListener = eventClickListener)
+        return AllEventsViewHolder(View.inflate(parent.context, R.layout.events_card_layout, null), eventClickListener = eventClickListener)
+        }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(holder is AllEventsViewHolder){
+            holder.onBind(dataList[position].data as EventApiData)
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
-    }
-
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return dataList.size
     }
 
+    fun setList(eventsApiDataList: List<AllEventsListItem.EventListItem>){
+        dataList.clear()
+        dataList.addAll(eventsApiDataList)
+        notifyDataSetChanged()
+    }
 }

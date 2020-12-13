@@ -3,6 +3,7 @@ package kz.kolesateam.confapp.events.data
 import kz.kolesateam.confapp.domain.UserNameDataSource
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.domain.UpcomingEventsRepository
 import kz.kolesateam.confapp.models.ResponseData
@@ -45,4 +46,14 @@ class DefaultUpcomingEventsRepository (
             type = 1,
             data = userNameDataSource.getUserName()
     )
+
+
+    private fun prepareUpcomingEventsList(
+        upcomingEvents: List<UpcomingEventsListItem>
+    ){
+        upcomingEvents.forEach{
+            val upcomingEvent: EventApiData = it.data as? EventApiData ?: return@forEach
+
+        }
+    }
 }

@@ -8,7 +8,6 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.domain.listeners.UpcomingEventsClickListener
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.domain.EventClickListener
 
 class BranchViewHolder(
         itemView: View,

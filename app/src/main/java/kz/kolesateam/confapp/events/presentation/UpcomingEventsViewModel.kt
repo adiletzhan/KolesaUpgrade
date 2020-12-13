@@ -40,8 +40,8 @@ class UpcomingEventsViewModel(
             eventData: EventApiData
     ){
         when(eventData.isFavorite) {
-            true -> favoriteEventsRepository.saveFavoriteEvents(eventData)
-            else -> favoriteEventsRepository.removeFavoriteEvents(eventData.id)
+            true -> favoriteEventsRepository.saveFavoriteEvent(eventData)
+            else -> favoriteEventsRepository.removeFavoriteEvent(eventData.id)
         }
 
     }
@@ -65,4 +65,5 @@ class UpcomingEventsViewModel(
             progressLiveData.value = ProgressState.Done
         }
     }
+
 }

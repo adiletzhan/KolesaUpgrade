@@ -3,7 +3,9 @@ package kz.kolesateam.confapp.favorite_events.data
 import android.app.Application
 import android.content.Context
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.type.MapType
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
 import kz.kolesateam.confapp.models.ResponseData
 import java.io.FileInputStream
@@ -18,23 +20,28 @@ class DefaultFavoriteEventsRepository(
 
     private val favoriteEvents: MutableMap<Int, EventApiData> = mutableMapOf()
 
-    override fun saveFavoriteEvents(eventApiData: EventApiData) {
+    init {
+        val favoriteEventsFromFile = getFavoriteEventsFromFile()
+        favoriteEvents.putAll(favoriteEventsFromFile)
+    }
+
+    override fun saveFavoriteEvent(eventApiData: EventApiData) {
         eventApiData.id ?: return
         favoriteEvents[eventApiData.id] = eventApiData
 
         saveFavoriteEventsToFile()
     }
 
-    override fun removeFavoriteEvents(eventId: Int?) {
-        favoriteEvents?.remove(eventId)
+    override fun removeFavoriteEvent(eventId: Int?) {
+        favoriteEvents.remove(eventId)
         saveFavoriteEventsToFile()
     }
 
-    override fun getAllFavoriteEvents(): ResponseData<List<EventApiData>, Exception> {
-        return ResponseData.Success(
-                result = favoriteEvents.values.toList()
-        )
+    override fun getAllFavoriteEvents(): List<EventApiData> {
+        return favoriteEvents.values.toList()
     }
+
+    override fun isFavorite(id: Int): Boolean = favoriteEvents.containsKey(id)
 
     private fun saveFavoriteEventsToFile(){
         val favoriteEventsJsonString: String = objectMapper.writeValueAsString(favoriteEvents)
@@ -45,13 +52,31 @@ class DefaultFavoriteEventsRepository(
         fileOutputStream.close()
     }
 
-    /*
-    private fun getFavoriteEventsToFile(): Map<Int, EventApiData>{
-        val fileInputStream: FileInputStream = context.openFileInput(FAVORITE_EVENTS_FILE_NAME)
+    private fun getFavoriteEventsFromFile(): Map<Int, EventApiData> {
+        var fileInputStream: FileInputStream? = null
+        try {
+            fileInputStream = context.openFileInput(FAVORITE_EVENTS_FILE_NAME)
+        }catch (exception: Exception) {
+            fileInputStream?.close()
+            return emptyMap()
+        }
+        val favoriteEventsJsonString: String =
+                fileInputStream?.bufferedReader()?.readLines()?.joinToString().orEmpty()
 
-        val favoriteEventsJsonString: String = fileInputStream.bufferedReader().readLines().joinToString()
-        //val favoriteEventsMapper: Map<Int, EventApiData> = objectMapper.re
+        val mapType: MapType = objectMapper.typeFactory.constructMapType(
+            Map::class.java,
+            Int::class.java,
+            EventApiData::class.java
+        )
+        return objectMapper.readValue(favoriteEventsJsonString, mapType)
     }
 
-     */
+    private fun prepareUpcomingEventsList(
+        upcomingEvents: List<UpcomingEventsListItem>
+    ){
+        upcomingEvents.forEach{
+            val upcomingEvent: EventApiData = it.data as? EventApiData ?: return@forEach
+
+        }
+    }
 }

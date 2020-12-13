@@ -10,7 +10,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.allevents.data.datasource.AllEventsListItem
+import kz.kolesateam.confapp.allevents.data.models.AllEventsListItem
 import kz.kolesateam.confapp.allevents.di.ALL_EVENTS_VIEW_MODEL
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.allevents.presentation.view.AllEventsAdapter

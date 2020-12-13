@@ -7,10 +7,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kz.kolesateam.confapp.allevents.data.datasource.AllEventsListItem
+import kz.kolesateam.confapp.allevents.data.models.AllEventsListItem
 import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
 import kz.kolesateam.confapp.models.ProgressState
-import kz.kolesateam.confapp.events.data.models.ResponseData
+import kz.kolesateam.confapp.models.ResponseData
 
 class AllEventsViewModel(
     private val allEventsRepository: AllEventsRepository
@@ -38,7 +38,7 @@ class AllEventsViewModel(
 
             val allEventsResponse: ResponseData<List<AllEventsListItem.EventListItem>, Exception> =
                 withContext(Dispatchers.IO) {
-                    allEventsRepository.getAllEvents(branchId, branchTitle)  ///????? bez implementationa
+                    allEventsRepository.getAllEvents(branchId, branchTitle)
                 }
 
             when (allEventsResponse) {

@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.data.models
+package kz.kolesateam.confapp.models
 
 sealed class ResponseData<out Result, out Error> {
     data class Success<Result>(

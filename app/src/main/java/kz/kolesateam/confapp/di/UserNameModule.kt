@@ -8,16 +8,11 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 const val SHARED_PREFS_DATA_SOURCE = "shared_prefs_data_source"
-const val MEMORY_DATA_SOURCE = "memory_data_source"
 
 val userNameModule : Module = module {
-    factory(named(SHARED_PREFS_DATA_SOURCE)){
+    factory{
         UserNameSharedPrefsDataSource(
                 sharedPreferences = get()
         ) as UserNameDataSource
-    }
-
-    single(named(MEMORY_DATA_SOURCE)){
-        UserNameMemoryDataSource() as UserNameDataSource
     }
 }

@@ -18,7 +18,7 @@ import org.koin.core.qualifier.named
 
 class HelloActivity : AppCompatActivity() {
 
-    private val userNameDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
+    private val userNameDataSource: UserNameDataSource by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

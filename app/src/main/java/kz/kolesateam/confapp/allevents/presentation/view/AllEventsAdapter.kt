@@ -1,12 +1,10 @@
 package kz.kolesateam.confapp.allevents.presentation.view
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.allevents.data.datasource.AllEventsListItem
-import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.allevents.data.models.AllEventsListItem
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.domain.EventClickListener
 

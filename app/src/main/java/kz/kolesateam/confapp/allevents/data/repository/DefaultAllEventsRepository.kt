@@ -1,19 +1,11 @@
 package kz.kolesateam.confapp.allevents.data.repository
 
 import kz.kolesateam.confapp.allevents.data.datasource.AllEventsDataSource
-import kz.kolesateam.confapp.allevents.data.datasource.AllEventsListItem
-import kz.kolesateam.confapp.allevents.data.datasource.EVENT_TYPE
+import kz.kolesateam.confapp.allevents.data.models.AllEventsListItem
 import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
-import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.data.models.ResponseData
-import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.models.ResponseData
 
 class DefaultAllEventsRepository(private val allEventsDataSource: AllEventsDataSource): AllEventsRepository{
-    /*
-    override fun getAllEvents(branchId: Int, branchTitle: String): ResponseData<List<UpcomingEventsListItem>, Exception> {
-        TODO("Not yet implemented")
-    }
-     */
 
      override fun getAllEvents(
              branchId: Int,

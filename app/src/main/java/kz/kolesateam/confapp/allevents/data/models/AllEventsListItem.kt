@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.allevents.data.datasource
+package kz.kolesateam.confapp.allevents.data.models
 
 import kz.kolesateam.confapp.events.data.models.EventApiData
 

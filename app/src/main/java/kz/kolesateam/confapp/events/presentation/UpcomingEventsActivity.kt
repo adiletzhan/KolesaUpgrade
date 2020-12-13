@@ -3,52 +3,39 @@ package kz.kolesateam.confapp.events.presentation
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.presentation.AllEventsActivity
-import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
-import kz.kolesateam.confapp.events.data.ApiClient
-import kz.kolesateam.confapp.domain.UserNameDataSource
-import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.events.di.UPCOMING_EVENTS_VIEW_MODEL
 import kz.kolesateam.confapp.events.domain.EventClickListener
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import org.koin.android.ext.android.inject
+import kz.kolesateam.confapp.models.ProgressState
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
 
 const val BRANCH_ID = "branch_id"
 const val BRANCH_TITLE = "branch_title"
-const val DEFAULT_USER_NAME = "GUEST"
 
-val apiRetrofit: Retrofit = Retrofit.Builder()
-    .baseUrl("http://37.143.8.68:2020")
-    .addConverterFactory(JacksonConverterFactory.create())
-    .build()
-
-val apiClient: ApiClient = apiRetrofit.create(ApiClient::class.java)
 
 @Suppress("DEPRECATION")
-class UpcomingEventsActivity : AppCompatActivity(),
-    EventClickListener {
-    private lateinit var recyclerView: RecyclerView
+class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
-    private val userNameDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
+    private lateinit var recyclerView: RecyclerView
+    //private lateinit var buttonToFavorites: Button
+
+    private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel(named(
+            UPCOMING_EVENTS_VIEW_MODEL))
 
     private val branchAdapter: BranchAdapter = BranchAdapter(eventClickListener = this)
 
     private lateinit var progressBar: ProgressBar
-
-    private var isPressed = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +43,9 @@ class UpcomingEventsActivity : AppCompatActivity(),
 
         bindViews()
 
-        loadApiData()
+        observeUpcomingEventsViewModel()
+        upcomingEventsViewModel.onStarted()
+
     }
 
     private fun bindViews() {
@@ -65,47 +54,25 @@ class UpcomingEventsActivity : AppCompatActivity(),
         recyclerView.adapter = branchAdapter
     }
 
-    private fun loadApiData() {
-
-        apiClient.getUpcomingEvents().enqueue(object : Callback<List<BranchApiData>> {
-
-            override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
-                if (response.isSuccessful) {
-
-                    fillAdapterList(response.body()!!)
-
-                    progressBar.visibility = ProgressBar.INVISIBLE
-                }
-            }
-
-            override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
-                progressBar.visibility = ProgressBar.INVISIBLE
-            }
-        })
+    private fun observeUpcomingEventsViewModel() {
+        upcomingEventsViewModel.getProgressLiveData().observe(this, ::handleProgressBarState)
+        upcomingEventsViewModel.getUpcomingEventsLiveData().observe(this,  ::showResult)
+        upcomingEventsViewModel.getErrorLiveData().observe(this, ::showError)
     }
 
-    private fun fillAdapterList(branchList: List<BranchApiData>){
-        val upcomingEventListItemList: List<UpcomingEventsListItem> =
-            listOf(getHeaderItem()) + getBranchItems(branchList)
-
-        branchAdapter.setList(upcomingEventListItemList)
+    private fun handleProgressBarState(
+            progressState: ProgressState
+    ) {
+        progressBar.isVisible = progressState is ProgressState.Loading
     }
 
-    private fun getHeaderItem(): UpcomingEventsListItem = UpcomingEventsListItem(
-        type = 1,
-        data = getUserName() //"Hello, ${getUserName()}!"
-    )
-
-    private fun getBranchItems(
-        branchList: List<BranchApiData>
-    ): List<UpcomingEventsListItem> = branchList.map { branchApiData ->
-        UpcomingEventsListItem(
-            type = 2,
-            data = branchApiData
-        )
+    private fun showError(errorMessage: Exception) {
+        Toast.makeText(this, errorMessage.localizedMessage, Toast.LENGTH_SHORT).show()
     }
 
-    private fun getUserName(): String = userNameDataSource.getUserName()
+    private fun showResult(upcomingEventsList: List<UpcomingEventsListItem>) {
+        branchAdapter.setList(upcomingEventsList)
+    }
 
     override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
         val allEventsIntent = Intent(this, AllEventsActivity::class.java)
@@ -120,23 +87,6 @@ class UpcomingEventsActivity : AppCompatActivity(),
     }
 
     override fun onFavoriteClickListener(view: View) {
-            view as ImageButton
-                if (isPressed) {
-                view.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        view.context,
-                        R.drawable.ic_baseline_favorite_filled
-                    )
-                )
-            }
-            else {
-                view.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        view.context,
-                        R.drawable.ic_like_big
-                    )
-                )
-            }
-            isPressed = !isPressed
+
         }
 }

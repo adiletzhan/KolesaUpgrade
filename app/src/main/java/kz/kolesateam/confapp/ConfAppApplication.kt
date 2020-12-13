@@ -3,6 +3,7 @@ package kz.kolesateam.confapp
 import android.app.Application
 import kz.kolesateam.confapp.allevents.di.eventScreenModule
 import kz.kolesateam.confapp.di.applicationModule
+import kz.kolesateam.confapp.di.favoriteEventsModule
 import kz.kolesateam.confapp.di.userNameModule
 import kz.kolesateam.confapp.events.di.upcomingEventsScreenModule
 import org.koin.android.ext.koin.androidContext
@@ -17,7 +18,8 @@ class ConfAppApplication: Application() {
                     eventScreenModule,
                     upcomingEventsScreenModule,
                     applicationModule,
-                    userNameModule
+                    userNameModule,
+                    favoriteEventsModule
             )
         }
     }

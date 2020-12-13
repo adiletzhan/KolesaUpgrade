@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:padding="8dp"
-        android:drawableLeft="@drawable/ic_like_big"
+        android:drawableLeft="@drawable/ic_favorite_border"
         android:drawablePadding="12dp"
         android:text="В избранные"
         android:textColor="#2A81DD"

@@ -5,14 +5,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.domain.listeners.UpcomingEventsClickListener
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.domain.EventClickListener
 
 class BranchViewHolder(
         itemView: View,
-        private val eventClickListener: EventClickListener
+        private val eventClickListener: UpcomingEventsClickListener
         ) : RecyclerView.ViewHolder(itemView) {
+
+    private lateinit var currentEvent: EventApiData
+    private lateinit var nextEvent: EventApiData
 
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
@@ -34,15 +38,40 @@ class BranchViewHolder(
     private val nextEventFavoriteIcon: ImageView = branchNextEvent.findViewById(R.id.event_card_favorite_icon)
 
     init {
-        branchCurrentEvent.findViewById<TextView>(R.id.event_card_state_text_vew).visibility = View.GONE
+        //branchCurrentEvent.setBackgroundResource(R.drawable.bg_dark)
+        branchCurrentEvent.findViewById<TextView>(R.id.event_card_state_text_vew).visibility = View.INVISIBLE
+
+        currentEventFavoriteIcon.setOnClickListener {
+            currentEvent.isFavorite =! currentEvent.isFavorite
+            val favoriteIconResource =getFavoriteImageResource(currentEvent.isFavorite)
+            currentEventFavoriteIcon.setImageResource(favoriteIconResource)
+
+            eventClickListener.onFavoritesClicked(currentEvent)
+        }
+
+        nextEventFavoriteIcon.setOnClickListener {
+            nextEvent.isFavorite =! nextEvent.isFavorite
+            val favoriteIconResource =getFavoriteImageResource(nextEvent.isFavorite)
+            nextEventFavoriteIcon.setImageResource(favoriteIconResource)
+
+            eventClickListener.onFavoritesClicked(nextEvent)
+        }
+
     }
 
     fun onBind(branchApiData: BranchApiData){
 
         branchTitle.text = branchApiData.title
 
-        val currentEvent: EventApiData = branchApiData.events!!.first()
-        val nextEvent: EventApiData = branchApiData.events.last()
+        if (branchApiData.events.isEmpty()){
+            branchCurrentEvent.visibility = View.GONE
+            branchNextEvent.visibility = View.GONE
+
+            return
+        }
+
+        currentEvent = branchApiData.events!!.first()
+        nextEvent = branchApiData.events.last()
 
         val currentEventTimePlaceText = "%s - %s • %s".format(
                 currentEvent.startTime,
@@ -67,35 +96,40 @@ class BranchViewHolder(
         nextEventTitle.text = nextEvent.title ?: "None"
 //review
         branchHeader.setOnClickListener{
-            branchApiData.id?.let { it1 ->
                 eventClickListener.onBranchClick(
-                    it,
-                    branchId = it1,
-                    branchTitle = branchTitle.text.toString()
+                    branchApiData
                 )
-            }
         }
 
         branchCurrentEvent.setOnClickListener{
-            eventClickListener.onEventClickListener(
-                it,
-                eventTitle = currentEvent.title.toString()
+            eventClickListener.onEventClick(
+                currentEvent
             )
         }
 
         branchNextEvent.setOnClickListener{
-            eventClickListener.onEventClickListener(
-                it,
-                eventTitle = nextEvent.title.toString()
+            eventClickListener.onEventClick(
+                    nextEvent
             )
         }
 
+        /*
         currentEventFavoriteIcon.setOnClickListener{
-            eventClickListener.onFavoriteClickListener(it)
+            eventClickListener.onFavoriteClicked(it)
         }
 
         nextEventFavoriteIcon.setOnClickListener{
             eventClickListener.onFavoriteClickListener(it)
         }
+
+         */
+    }
+
+    private fun getFavoriteImageResource(
+            isFavorite: Boolean
+    ): Int = when(isFavorite){
+        true -> R.drawable.ic_favorite_filled
+        else -> R.drawable.ic_favorite_border
+
     }
 }

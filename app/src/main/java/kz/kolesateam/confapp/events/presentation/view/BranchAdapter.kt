@@ -5,11 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.domain.listeners.UpcomingEventsClickListener
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.domain.EventClickListener
 
-class BranchAdapter(private val eventClickListener: EventClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BranchAdapter(private val eventClickListener: UpcomingEventsClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val dataList: MutableList<UpcomingEventsListItem> = mutableListOf()
 

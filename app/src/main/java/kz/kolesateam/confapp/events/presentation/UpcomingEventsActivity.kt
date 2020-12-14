@@ -21,6 +21,7 @@ import kz.kolesateam.confapp.events.domain.EventClickListener
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.models.ProgressState
+import kz.kolesateam.confapp.notifications.ConfAppNotificationManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
@@ -93,6 +94,13 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingEventsClickListener 
     }
 
     override fun onEventClick(eventData: EventApiData) {
+        val name = eventData.title
+        val content = eventData.description
+        ConfAppNotificationManager.sendNotification(
+            title = name?: "Some Notification",
+            content = content?: "Default Content"
+        )
+
         Toast.makeText(this, eventData.title, Toast.LENGTH_SHORT).show()
     }
 

@@ -96,11 +96,6 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingEventsClickListener 
     override fun onEventClick(eventData: EventApiData) {
         val name = eventData.title
         val content = eventData.description
-        ConfAppNotificationManager.sendNotification(
-            title = name?: "Some Notification",
-            content = content?: "Default Content"
-        )
-
         Toast.makeText(this, eventData.title, Toast.LENGTH_SHORT).show()
     }
 

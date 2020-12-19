@@ -23,6 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".allevents.presentation.AllEventsActivity" />
+
+        <receiver android:name=".notifications.NotificationAlarmBroadcastReceiver" />
     </application>
 
 </manifest>

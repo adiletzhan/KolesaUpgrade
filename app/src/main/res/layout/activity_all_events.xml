@@ -14,6 +14,7 @@
         android:orientation="horizontal"
         >
         <ImageView
+            android:id="@+id/activity_all_events_back_arrow"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:padding="5dp"

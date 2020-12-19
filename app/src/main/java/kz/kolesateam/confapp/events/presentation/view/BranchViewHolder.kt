@@ -42,7 +42,7 @@ class BranchViewHolder(
 
         currentEventFavoriteIcon.setOnClickListener {
             currentEvent.isFavorite =! currentEvent.isFavorite
-            val favoriteIconResource =getFavoriteImageResource(currentEvent.isFavorite)
+            val favoriteIconResource = getFavoriteImageResource(currentEvent.isFavorite)
             currentEventFavoriteIcon.setImageResource(favoriteIconResource)
 
             eventClickListener.onFavoritesClicked(currentEvent)

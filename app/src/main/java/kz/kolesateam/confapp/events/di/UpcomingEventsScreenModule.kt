@@ -37,7 +37,8 @@ val upcomingEventsScreenModule: Module = module {
     viewModel(named(UPCOMING_EVENTS_VIEW_MODEL)) {
         UpcomingEventsViewModel(
                 upcomingEventsRepository = get(),
-                favoriteEventsRepository = get()
+                favoriteEventsRepository = get(),
+                notificationAlarmHelper = get()
         )
     }
 

@@ -3,6 +3,7 @@ package kz.kolesateam.confapp.allevents.presentation
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,7 @@ class AllEventsActivity: AppCompatActivity(),
     private lateinit var allEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var buttonToFavorites: Button
+    private lateinit var buttonGoBack: ImageView
 
     private val adapter = AllEventsAdapter(this)
     private var branchId: Int = 0
@@ -49,10 +51,13 @@ class AllEventsActivity: AppCompatActivity(),
         branchTitle = intent.getStringExtra(BRANCH_TITLE) ?: ""
 
         buttonToFavorites = findViewById(R.id.all_events_favorite_button)
+        buttonGoBack = findViewById(R.id.activity_all_events_back_arrow)
 
         recyclerView = findViewById(R.id.activity_allEvents_recycler_view)
 
         recyclerView.adapter = adapter
+
+
         /*
         recyclerView.apply {
             this.adapter = this@AllEventsActivity.adapter
@@ -66,6 +71,11 @@ class AllEventsActivity: AppCompatActivity(),
         buttonToFavorites.setOnClickListener{
             Toast.makeText(this, "Нажата кнопка ${"В избранные"}", Toast.LENGTH_SHORT).show()
         }
+
+        buttonGoBack.setOnClickListener{
+            finish()
+        }
+
     }
 
     private fun observeUpcomingEventsViewModel() {

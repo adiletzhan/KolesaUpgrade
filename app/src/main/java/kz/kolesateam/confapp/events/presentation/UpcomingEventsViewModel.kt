@@ -15,10 +15,13 @@ import kz.kolesateam.confapp.events.domain.UpcomingEventsRepository
 import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.models.ResponseData
+import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
+import kz.kolesateam.confapp.notifications.NotificationHelper
 
 class UpcomingEventsViewModel(
         private val upcomingEventsRepository: UpcomingEventsRepository,
-        private val favoriteEventsRepository: FavoriteEventsRepository
+        private val favoriteEventsRepository: FavoriteEventsRepository,
+        private val notificationAlarmHelper: NotificationAlarmHelper
 ): ViewModel() {
 
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
@@ -40,10 +43,18 @@ class UpcomingEventsViewModel(
             eventData: EventApiData
     ){
         when(eventData.isFavorite) {
-            true -> favoriteEventsRepository.saveFavoriteEvent(eventData)
+            true -> {
+                favoriteEventsRepository.saveFavoriteEvent(eventData)
+                scheduleEvent(eventData)
+            }
             else -> favoriteEventsRepository.removeFavoriteEvent(eventData.id)
         }
+    }
 
+    private fun scheduleEvent(eventData: EventApiData){
+        notificationAlarmHelper.createNotificationAlarm(
+                content = eventData.title.orEmpty()
+        )
     }
     private fun getAllEvents() {
         GlobalScope.launch(Dispatchers.Main) {

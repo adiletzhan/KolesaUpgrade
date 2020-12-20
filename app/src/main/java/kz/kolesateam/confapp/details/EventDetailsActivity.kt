@@ -21,7 +21,7 @@ class EventDetailsActivity: Activity(){
     }
 
     private fun bindViews(){
-        infoTextView = findViewById(R.id.activity_event_details_info_text_view)
+        infoTextView = findViewById(R.id.activity_event_details_text_view_event_description)
 
     }
 

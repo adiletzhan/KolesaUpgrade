@@ -99,10 +99,9 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingEventsClickListener 
 
     override fun onEventClick(eventData: EventApiData) {
 
-        Toast.makeText(this, eventData.title, Toast.LENGTH_SHORT).show()
         val eventDetailsIntent: Intent = eventDetailsRouter.createIntent(
                 context = this,
-                eventTitle = eventData.title.toString()
+                eventId = eventData.id!!
         )
         startActivity(eventDetailsIntent)
     }

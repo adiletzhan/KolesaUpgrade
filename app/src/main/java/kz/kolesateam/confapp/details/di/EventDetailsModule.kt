@@ -18,7 +18,7 @@ val eventDetailsModule: Module = module {
         EventDetailsRouter()
     }
 
-    single() {
+    single {
         val retrofit: Retrofit = get()
 
         retrofit.create(EventDetailsDataSource::class.java)

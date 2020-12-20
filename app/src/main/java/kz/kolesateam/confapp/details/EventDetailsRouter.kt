@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import kz.kolesateam.confapp.details.presentation.EventDetailsActivity
 
-internal const val EVENT_TITLE_KEY = "event_title_key"
+internal const val EVENT_ID = "event_id"
 
 class EventDetailsRouter {
 
     fun createIntent(
             context: Context,
-            eventTitle: String
+            eventId: Int
     ): Intent = Intent(context, EventDetailsActivity::class.java).apply {
-        putExtra(EVENT_TITLE_KEY, eventTitle)
+        putExtra(EVENT_ID, eventId)
     }
 }

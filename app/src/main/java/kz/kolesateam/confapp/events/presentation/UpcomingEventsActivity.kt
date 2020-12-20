@@ -12,6 +12,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.presentation.AllEventsActivity
+import kz.kolesateam.confapp.details.EventDetailsRouter
 import kz.kolesateam.confapp.domain.listeners.UpcomingEventsClickListener
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
@@ -22,6 +23,7 @@ import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.notifications.ConfAppNotificationManager
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 
@@ -37,6 +39,8 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingEventsClickListener 
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel(named(
             UPCOMING_EVENTS_VIEW_MODEL))
+
+    private val eventDetailsRouter: EventDetailsRouter by inject()
 
     private val branchAdapter: BranchAdapter = BranchAdapter(eventClickListener = this)
 
@@ -94,9 +98,13 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingEventsClickListener 
     }
 
     override fun onEventClick(eventData: EventApiData) {
-        val name = eventData.title
-        val content = eventData.description
+
         Toast.makeText(this, eventData.title, Toast.LENGTH_SHORT).show()
+        val eventDetailsIntent: Intent = eventDetailsRouter.createIntent(
+                context = this,
+                eventTitle = eventData.title.toString()
+        )
+        startActivity(eventDetailsIntent)
     }
 
     override fun onFavoritesClicked(eventData: EventApiData) {

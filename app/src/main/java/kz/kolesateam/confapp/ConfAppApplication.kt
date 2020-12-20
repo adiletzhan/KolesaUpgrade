@@ -2,6 +2,7 @@ package kz.kolesateam.confapp
 
 import android.app.Application
 import kz.kolesateam.confapp.allevents.di.eventScreenModule
+import kz.kolesateam.confapp.details.eventDetailsModule
 import kz.kolesateam.confapp.di.applicationModule
 import kz.kolesateam.confapp.di.favoriteEventsModule
 import kz.kolesateam.confapp.di.userNameModule
@@ -27,7 +28,8 @@ class ConfAppApplication: Application() {
                     upcomingEventsScreenModule,
                     applicationModule,
                     userNameModule,
-                    favoriteEventsModule
+                    favoriteEventsModule,
+                    eventDetailsModule
             )
         }
     }

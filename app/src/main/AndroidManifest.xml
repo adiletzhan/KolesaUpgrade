@@ -18,7 +18,7 @@
 
         <activity android:name=".events.presentation.UpcomingEventsActivity" />
 
-        <activity android:name=".details.EventDetailsActivity">
+        <activity android:name=".details.presentation.EventDetailsActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

@@ -35,7 +35,7 @@ const val BRANCH_TITLE = "branch_title"
 class UpcomingEventsActivity : AppCompatActivity(), UpcomingEventsClickListener {
 
     private lateinit var recyclerView: RecyclerView
-    //private lateinit var buttonToFavorites: Button
+    //private lateinit var buttonToFavorites: ...........................................................Button
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel(named(
             UPCOMING_EVENTS_VIEW_MODEL))

@@ -23,8 +23,11 @@ import org.koin.core.qualifier.named
 
 
 @Suppress("DEPRECATION")
-class AllEventsActivity: AppCompatActivity(),
-    EventClickListener {
+class AllEventsActivity:
+        AppCompatActivity(),
+        EventClickListener
+{
+
     private val allEventsViewModel: AllEventsViewModel by viewModel(named(
             ALL_EVENTS_VIEW_MODEL))
 

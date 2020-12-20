@@ -16,7 +16,6 @@ class AllEventsViewModel(
     private val allEventsRepository: AllEventsRepository
 ) : ViewModel() {
 
-
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
     private val allEventsLiveData: MutableLiveData<List<AllEventsListItem.EventListItem>> =
         MutableLiveData()

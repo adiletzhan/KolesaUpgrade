@@ -30,7 +30,9 @@ val eventDetailsModule: Module = module {
 
     viewModel(named(EVENT_DETAILS_VIEW_MODEL)) {
         EventDetailsViewModel(
-                eventDetailsRepository = get()
+            eventDetailsRepository = get(),
+            favoritesRepository = get(),
+            notificationAlarmHelper = get()
         )
     }
 }

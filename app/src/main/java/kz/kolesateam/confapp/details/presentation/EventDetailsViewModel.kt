@@ -10,11 +10,18 @@ import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.allevents.data.models.AllEventsListItem
 import kz.kolesateam.confapp.details.domain.EventDetailsRepository
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.models.ResponseData
+import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.ZonedDateTime
 
 class EventDetailsViewModel(
-        private val eventDetailsRepository: EventDetailsRepository
+        private val eventDetailsRepository: EventDetailsRepository,
+        private val favoritesRepository: FavoriteEventsRepository,
+        private val notificationAlarmHelper: NotificationAlarmHelper
+
 ): ViewModel() {
 
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
@@ -48,4 +55,20 @@ class EventDetailsViewModel(
             progressLiveData.value = ProgressState.Done
         }
     }
+
+
+    fun onFavoriteClick(eventData: EventApiData) {
+        when (eventData.isFavorite) {
+            true -> {
+                favoritesRepository.saveFavoriteEvent(eventData)
+                notificationAlarmHelper.createNotificationAlarm(eventData.title.toString())
+            }
+
+            else -> {
+                favoritesRepository.removeFavoriteEvent(eventData.id)
+                notificationAlarmHelper.cancelNotificationAlarm(eventData)
+            }
+        }
+    }
+
 }

@@ -23,11 +23,13 @@ import kz.kolesateam.confapp.models.ProgressState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named
 import com.bumptech.glide.request.target.Target
+import kz.kolesateam.confapp.domain.listeners.UpcomingEventsClickListener
+import kz.kolesateam.confapp.events.data.models.BranchApiData
 
 private const val  DEEPLINK_TITLE_KEY = "title"
 private const val DEEPLINK_EVENT_KEY = "event_id"
 
-class EventDetailsActivity: AppCompatActivity()
+class EventDetailsActivity: AppCompatActivity(), UpcomingEventsClickListener
 {
 
     private val eventDetailsViewModel: EventDetailsViewModel by viewModel(named(EVENT_DETAILS_VIEW_MODEL))
@@ -40,7 +42,8 @@ class EventDetailsActivity: AppCompatActivity()
     private lateinit var speakerPhoto: ImageView
 
     private lateinit var evenDetailsProgressBar: ProgressBar
-
+    private lateinit var buttonToFavorites: ImageView
+    
     private var eventId: Int = 0
 
 
@@ -50,6 +53,7 @@ class EventDetailsActivity: AppCompatActivity()
         initViews()
         eventDetailsViewModel.onStarted(eventId)
         observeUpcomingEventsViewModel()
+
     }
 
     private fun initViews(){
@@ -62,7 +66,9 @@ class EventDetailsActivity: AppCompatActivity()
         eventDescription = findViewById(R.id.activity_event_details_text_view_event_description)
         speakerPhoto = findViewById(R.id.activity_event_details_image_view_speaker_photo)
         evenDetailsProgressBar = findViewById(R.id.activity_event_details_progressBar)
+        buttonToFavorites = findViewById(R.id.activity_event_details_image_view_to_favorites)
     }
+
 
     private fun observeUpcomingEventsViewModel() {
         eventDetailsViewModel.getProgressLiveData().observe(this, ::handleProgressBarState)
@@ -70,6 +76,14 @@ class EventDetailsActivity: AppCompatActivity()
         eventDetailsViewModel.getErrorLiveData().observe(this, ::showError)
     }
 
+    private fun setListeners(eventData: EventApiData) {
+        buttonToFavorites.setOnClickListener {
+            eventData.isFavorite = !eventData.isFavorite
+            val favoriteImageResource = getFavoriteImageResource(eventData.isFavorite)
+            buttonToFavorites.setImageResource(favoriteImageResource)
+            eventDetailsViewModel.onFavoriteClick(eventData)
+        }
+    }
     private fun handleProgressBarState(
             progressState: ProgressState
     ) {
@@ -121,9 +135,29 @@ class EventDetailsActivity: AppCompatActivity()
                         speakerPhoto.visibility = View.VISIBLE
                         return false
                     }
-
                 })
                 .into(speakerPhoto)
+        setListeners(eventData)
     }
+
+    override fun onBranchClick(branchData: BranchApiData) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onEventClick(eventData: EventApiData) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFavoritesClicked(eventData: EventApiData) {
+        eventDetailsViewModel.onFavoriteClick(eventData)
+    }
+
+    private fun getFavoriteImageResource(
+        isFavorite: Boolean,
+    ): Int = when (isFavorite) {
+        true -> R.drawable.ic_favorite_filled
+        else -> R.drawable.ic_favorite_border
+    }
+
 
 }

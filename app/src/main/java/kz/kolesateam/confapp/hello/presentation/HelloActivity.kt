@@ -50,7 +50,6 @@ class HelloActivity : AppCompatActivity() {
     }
 
     private fun navigateToUpcomingEventsActivity(){
-        val upcomingEventsIntent = Intent(this, UpcomingEventsActivity::class.java)
-        startActivity(upcomingEventsIntent)
+        startActivity(EventsRouter().createIntent(this))
     }
 }
